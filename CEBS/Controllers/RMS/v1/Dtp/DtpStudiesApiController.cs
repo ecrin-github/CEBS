@@ -1,18 +1,18 @@
 using CEBS.Contracts.Responses;
 using CEBS.Contracts.Responses.RMS.DTO.v1;
+using CEBS.Interfaces.RMS.Services;
 using Microsoft.AspNetCore.Mvc;
-using RmsService.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace CEBS.Controllers.RMS.v1.Dtp;
 
 public class DtpStudiesApiController : BaseRmsApiController
 {
-    private readonly IDtpRepository _dtpRepository;
+    private readonly IDtpService _dtpService;
 
-    public DtpStudiesApiController(IDtpRepository dtpRepository)
+    public DtpStudiesApiController(IDtpService dtpService)
     {
-        _dtpRepository = dtpRepository ?? throw new ArgumentNullException(nameof(dtpRepository));
+        _dtpService = dtpService ?? throw new ArgumentNullException(nameof(dtpService));
     }
 
 
@@ -20,30 +20,30 @@ public class DtpStudiesApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process studies endpoint" })]
     public async Task<IActionResult> GetDtpStudyList(int dtpId)
     {
-        var dtp = await _dtpRepository.GetDtp(dtpId);
-        if (dtp == null)
-            return Ok(new ApiResponse<DtpStudyDto>()
+        var dtp = await _dtpService.GetDtp(dtpId);
+        if (dtp.Total == 0 && dtp.Data.Length == 0)
+            return Ok(new ApiResponse<DtpDto>()
             {
-                Total = 0,
+                Total = dtp.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP has been found." },
-                Data = null
+                Messages = new [] { "No DTP has been found." },
+                Data = dtp.Data
             });
-        var dtpStudies = await _dtpRepository.GetAllDtpStudies(dtpId);
-        if (dtpStudies == null)
+        var dtpStudies = await _dtpService.GetAllDtpStudies(dtpId);
+        if (dtpStudies.Total == 0 && dtpStudies.Data.Length == 0)
             return Ok(new ApiResponse<DtpStudyDto>()
             {
-                Total = 0,
+                Total = dtpStudies.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP studies have been found." },
-                Data = null
+                Messages = new [] { "No DTP studies have been found." },
+                Data = dtpStudies.Data
             });
         return Ok(new ApiResponse<DtpStudyDto>()
         {
-            Total = dtpStudies.Count,
+            Total = dtpStudies.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = dtpStudies
+            Messages = Array.Empty<string>(),
+            Data = dtpStudies.Data
         });
     }
 
@@ -51,32 +51,31 @@ public class DtpStudiesApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process studies endpoint" })]
     public async Task<IActionResult> GetDtpStudy(int dtpId, int id)
     {
-        var dtp = await _dtpRepository.GetDtp(dtpId);
-        if (dtp == null)
-            return Ok(new ApiResponse<DtpStudyDto>()
+        var dtp = await _dtpService.GetDtp(dtpId);
+        if (dtp.Total == 0 && dtp.Data.Length == 0)
+            return Ok(new ApiResponse<DtpDto>()
             {
-                Total = 0,
+                Total = dtp.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP has been found." },
-                Data = null
+                Messages = new [] { "No DTP has been found." },
+                Data = dtp.Data
             });
 
-        var dtpStudy = await _dtpRepository.GetDtpStudy(id);
-        if (dtpStudy == null)
+        var dtpStudy = await _dtpService.GetDtpStudy(id);
+        if (dtpStudy.Total == 0 && dtpStudy.Data.Length == 0)
             return Ok(new ApiResponse<DtpStudyDto>()
             {
-                Total = 0,
+                Total = dtpStudy.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP study has been found." },
-                Data = null
+                Messages = new [] { "No DTP study has been found." },
+                Data = dtpStudy.Data
             });
-        var dtpStudyList = new List<DtpStudyDto>() { dtpStudy };
         return Ok(new ApiResponse<DtpStudyDto>()
         {
-            Total = dtpStudyList.Count,
+            Total = dtpStudy.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = dtpStudyList
+            Messages = Array.Empty<string>(),
+            Data = dtpStudy.Data
         });
     }
 
@@ -84,32 +83,31 @@ public class DtpStudiesApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process studies endpoint" })]
     public async Task<IActionResult> CreateDtpStudy(int dtpId, [FromBody] DtpStudyDto dtpStudyDto)
     {
-        var dtp = await _dtpRepository.GetDtp(dtpId);
-        if (dtp == null)
-            return Ok(new ApiResponse<DtpStudyDto>()
+        var dtp = await _dtpService.GetDtp(dtpId);
+        if (dtp.Total == 0 && dtp.Data.Length == 0)
+            return Ok(new ApiResponse<DtpDto>()
             {
-                Total = 0,
+                Total = dtp.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP has been found." },
-                Data = null
+                Messages = new [] { "No DTP has been found." },
+                Data = dtp.Data
             });
 
-        var dtpStudy = await _dtpRepository.CreateDtpStudy(dtpId, dtpStudyDto.StudyId, dtpStudyDto);
-        if (dtpStudy == null)
+        var dtpStudy = await _dtpService.CreateDtpStudy(dtpId, dtpStudyDto.StudyId, dtpStudyDto);
+        if (dtpStudy.Total == 0 && dtpStudy.Data.Length == 0)
             return Ok(new ApiResponse<DtpStudyDto>()
             {
-                Total = 0,
+                Total = dtpStudy.Total,
                 StatusCode = BadRequest().StatusCode,
-                Messages = new List<string>() { "Error during DTP study creation." },
-                Data = null
+                Messages = new [] { "Error during DTP study creation." },
+                Data = dtpStudy.Data
             });
-        var dtpStudyList = new List<DtpStudyDto>() { dtpStudy };
         return Ok(new ApiResponse<DtpStudyDto>()
         {
-            Total = dtpStudyList.Count,
+            Total = dtpStudy.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = dtpStudyList
+            Messages = Array.Empty<string>(),
+            Data = dtpStudy.Data
         });
     }
 
@@ -117,42 +115,41 @@ public class DtpStudiesApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process studies endpoint" })]
     public async Task<IActionResult> UpdateDtpStudy(int dtpId, int id, [FromBody] DtpStudyDto dtpStudyDto)
     {
-        var dtp = await _dtpRepository.GetDtp(dtpId);
-        if (dtp == null)
-            return Ok(new ApiResponse<DtpStudyDto>()
+        var dtp = await _dtpService.GetDtp(dtpId);
+        if (dtp.Total == 0 && dtp.Data.Length == 0)
+            return Ok(new ApiResponse<DtpDto>()
             {
-                Total = 0,
+                Total = dtp.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP has been found." },
-                Data = null
+                Messages = new [] { "No DTP has been found." },
+                Data = dtp.Data
             });
 
-        var dtpStudy = await _dtpRepository.GetDtpStudy(id);
-        if (dtpStudy == null)
+        var dtpStudy = await _dtpService.GetDtpStudy(id);
+        if (dtpStudy.Total == 0 && dtpStudy.Data.Length == 0)
             return Ok(new ApiResponse<DtpStudyDto>()
             {
-                Total = 0,
+                Total = dtpStudy.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP study has been found." },
-                Data = null
+                Messages = new [] { "No DTP study has been found." },
+                Data = dtpStudy.Data
             });
 
-        var updatedDtpStudy = await _dtpRepository.UpdateDtpStudy(dtpStudyDto);
-        if (updatedDtpStudy == null)
+        var updatedDtpStudy = await _dtpService.UpdateDtpStudy(dtpStudyDto);
+        if (updatedDtpStudy.Total == 0 && updatedDtpStudy.Data.Length == 0)
             return Ok(new ApiResponse<DtpStudyDto>()
             {
-                Total = 0,
+                Total = updatedDtpStudy.Total,
                 StatusCode = BadRequest().StatusCode,
-                Messages = new List<string>() { "Error during DTP study update." },
-                Data = null
+                Messages = new [] { "Error during DTP study update." },
+                Data = updatedDtpStudy.Data
             });
-        var dtpStudyList = new List<DtpStudyDto>() { updatedDtpStudy };
         return Ok(new ApiResponse<DtpStudyDto>()
         {
-            Total = dtpStudyList.Count,
+            Total = updatedDtpStudy.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = dtpStudyList
+            Messages = Array.Empty<string>(),
+            Data = updatedDtpStudy.Data
         });
     }
 
@@ -160,33 +157,33 @@ public class DtpStudiesApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process studies endpoint" })]
     public async Task<IActionResult> DeleteDtpStudy(int dtpId, int id)
     {
-        var dtp = await _dtpRepository.GetDtp(dtpId);
-        if (dtp == null)
-            return Ok(new ApiResponse<DtpStudyDto>()
+        var dtp = await _dtpService.GetDtp(dtpId);
+        if (dtp.Total == 0 && dtp.Data.Length == 0)
+            return Ok(new ApiResponse<DtpDto>()
             {
-                Total = 0,
+                Total = dtp.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP has been found." },
-                Data = null
+                Messages = new [] { "No DTP has been found." },
+                Data = dtp.Data
             });
 
-        var dtpStudy = await _dtpRepository.GetDtpStudy(id);
-        if (dtpStudy == null)
+        var dtpStudy = await _dtpService.GetDtpStudy(id);
+        if (dtpStudy.Total == 0 && dtpStudy.Data.Length == 0)
             return Ok(new ApiResponse<DtpStudyDto>()
             {
-                Total = 0,
+                Total = dtpStudy.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP study has been found." },
-                Data = null
+                Messages = new [] { "No DTP study has been found." },
+                Data = dtpStudy.Data
             });
 
-        var count = await _dtpRepository.DeleteDtpStudy(id);
+        var count = await _dtpService.DeleteDtpStudy(id);
         return Ok(new ApiResponse<DtpStudyDto>()
         {
             Total = count,
             StatusCode = Ok().StatusCode,
-            Messages = new List<string>() { "DTP study has been removed." },
-            Data = null
+            Messages = new [] { "DTP study has been removed." },
+            Data = Array.Empty<DtpStudyDto>()
         });
     }
 
@@ -194,23 +191,23 @@ public class DtpStudiesApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process studies endpoint" })]
     public async Task<IActionResult> DeleteAllDtpStudies(int dtpId)
     {
-        var dtp = await _dtpRepository.GetDtp(dtpId);
-        if (dtp == null)
-            return Ok(new ApiResponse<DtpStudyDto>()
+        var dtp = await _dtpService.GetDtp(dtpId);
+        if (dtp.Total == 0 && dtp.Data.Length == 0)
+            return Ok(new ApiResponse<DtpDto>()
             {
-                Total = 0,
+                Total = dtp.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP has been found." },
-                Data = null
+                Messages = new [] { "No DTP has been found." },
+                Data = dtp.Data
             });
 
-        var count = await _dtpRepository.DeleteAllDtpStudies(dtpId);
+        var count = await _dtpService.DeleteAllDtpStudies(dtpId);
         return Ok(new ApiResponse<DtpStudyDto>()
         {
             Total = count,
             StatusCode = Ok().StatusCode,
-            Messages = new List<string>() { "All DTP studies have been found." },
-            Data = null
+            Messages = new [] { "All DTP studies have been found." },
+            Data = Array.Empty<DtpStudyDto>()
         });
     }
 }

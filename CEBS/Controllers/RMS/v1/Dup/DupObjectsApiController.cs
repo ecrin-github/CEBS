@@ -1,18 +1,18 @@
 using CEBS.Contracts.Responses;
 using CEBS.Contracts.Responses.RMS.DTO.v1;
+using CEBS.Interfaces.RMS.Services;
 using Microsoft.AspNetCore.Mvc;
-using RmsService.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace CEBS.Controllers.RMS.v1.Dup;
 
 public class DupObjectsApiController : BaseRmsApiController
 {
-    private readonly IDupRepository _dupRepository;
+    private readonly IDupService _dupService;
 
-    public DupObjectsApiController(IDupRepository dupRepository)
+    public DupObjectsApiController(IDupService dupService)
     {
-        _dupRepository = dupRepository ?? throw new ArgumentNullException(nameof(dupRepository));
+        _dupService = dupService ?? throw new ArgumentNullException(nameof(dupService));
     }
 
 
@@ -20,32 +20,32 @@ public class DupObjectsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data use process objects endpoint" })]
     public async Task<IActionResult> GetDupObjectList(int dupId)
     {
-        var dup = await _dupRepository.GetDup(dupId);
-        if (dup == null)
-            return Ok(new ApiResponse<DupObjectDto>()
+        var dup = await _dupService.GetDup(dupId);
+        if (dup.Total == 0 && dup.Data.Length == 0)
+            return Ok(new ApiResponse<DupDto>()
             {
-                Total = 0,
+                Total = dup.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DUP has been found." },
-                Data = null
+                Messages = new [] { "No DUP has been found." },
+                Data = dup.Data
             });
 
-        var dupObjects = await _dupRepository.GetDupObjects(dupId);
-        if (dupObjects == null)
+        var dupObjects = await _dupService.GetDupObjects(dupId);
+        if (dupObjects.Total == 0 && dupObjects.Data.Length == 0)
             return Ok(new ApiResponse<DupObjectDto>()
             {
-                Total = 0,
+                Total = dupObjects.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DUP objects have been found." },
-                Data = null
+                Messages = new [] { "No DUP objects have been found." },
+                Data = dupObjects.Data
             });
 
         return Ok(new ApiResponse<DupObjectDto>()
         {
-            Total = dupObjects.Count,
+            Total = dupObjects.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = dupObjects
+            Messages = Array.Empty<string>(),
+            Data = dupObjects.Data
         });
     }
 
@@ -53,33 +53,32 @@ public class DupObjectsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data use process objects endpoint" })]
     public async Task<IActionResult> GetDupObject(int dupId, int id)
     {
-        var dup = await _dupRepository.GetDup(dupId);
-        if (dup == null)
-            return Ok(new ApiResponse<DupObjectDto>()
+        var dup = await _dupService.GetDup(dupId);
+        if (dup.Total == 0 && dup.Data.Length == 0)
+            return Ok(new ApiResponse<DupDto>()
             {
-                Total = 0,
+                Total = dup.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DUP has been found." },
-                Data = null
+                Messages = new [] { "No DUP has been found." },
+                Data = dup.Data
             });
 
-        var dupObj = await _dupRepository.GetDupObject(id);
-        if (dupObj == null)
+        var dupObj = await _dupService.GetDupObject(id);
+        if (dupObj.Total == 0 && dupObj.Data.Length == 0)
             return Ok(new ApiResponse<DupObjectDto>()
             {
-                Total = 0,
+                Total = dupObj.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DUP objects has been found." },
-                Data = null
+                Messages = new [] { "No DUP objects has been found." },
+                Data = dupObj.Data
             });
 
-        var dupObjectList = new List<DupObjectDto>() { dupObj };
         return Ok(new ApiResponse<DupObjectDto>()
         {
-            Total = dupObjectList.Count,
+            Total = dupObj.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = dupObjectList
+            Messages = Array.Empty<string>(),
+            Data = dupObj.Data
         });
     }
 
@@ -87,33 +86,32 @@ public class DupObjectsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data use process objects endpoint" })]
     public async Task<IActionResult> CreateDupObject(int dupId, [FromBody] DupObjectDto dupObjectDto)
     {
-        var dup = await _dupRepository.GetDup(dupId);
-        if (dup == null)
-            return Ok(new ApiResponse<DupObjectDto>()
+        var dup = await _dupService.GetDup(dupId);
+        if (dup.Total == 0 && dup.Data.Length == 0)
+            return Ok(new ApiResponse<DupDto>()
             {
-                Total = 0,
+                Total = dup.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DUP has been found." },
-                Data = null
+                Messages = new [] { "No DUP has been found." },
+                Data = dup.Data
             });
 
-        var dupObj = await _dupRepository.CreateDupObject(dupId, dupObjectDto);
-        if (dupObj == null)
+        var dupObj = await _dupService.CreateDupObject(dupId, dupObjectDto);
+        if (dupObj.Total == 0 && dupObj.Data.Length == 0)
             return Ok(new ApiResponse<DupObjectDto>()
             {
-                Total = 0,
+                Total = dupObj.Total,
                 StatusCode = BadRequest().StatusCode,
-                Messages = new List<string>() { "Error during DUP object creation." },
-                Data = null
+                Messages = new [] { "Error during DUP object creation." },
+                Data = dupObj.Data
             });
 
-        var dupObjList = new List<DupObjectDto>() { dupObj };
         return Ok(new ApiResponse<DupObjectDto>()
         {
-            Total = dupObjList.Count,
+            Total = dupObj.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = dupObjList
+            Messages = Array.Empty<string>(),
+            Data = dupObj.Data
         });
     }
 
@@ -121,43 +119,42 @@ public class DupObjectsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data use process objects endpoint" })]
     public async Task<IActionResult> UpdateDupObject(int dupId, int id, [FromBody] DupObjectDto dupObjectDto)
     {
-        var dup = await _dupRepository.GetDup(dupId);
-        if (dup == null)
-            return Ok(new ApiResponse<DupObjectDto>()
+        var dup = await _dupService.GetDup(dupId);
+        if (dup.Total == 0 && dup.Data.Length == 0)
+            return Ok(new ApiResponse<DupDto>()
             {
-                Total = 0,
+                Total = dup.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DUP has been found." },
-                Data = null
+                Messages = new [] { "No DUP has been found." },
+                Data = dup.Data
             });
 
-        var dupObj = await _dupRepository.GetDupObject(id);
-        if (dupObj == null)
+        var dupObj = await _dupService.GetDupObject(id);
+        if (dupObj.Total == 0 && dupObj.Data.Length == 0)
             return Ok(new ApiResponse<DupObjectDto>()
             {
-                Total = 0,
+                Total = dupObj.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DUP object has been found." },
-                Data = null
+                Messages = new [] { "No DUP object has been found." },
+                Data = dupObj.Data
             });
 
-        var updatedDupObject = await _dupRepository.UpdateDupObject(dupObjectDto);
-        if (updatedDupObject == null)
+        var updatedDupObject = await _dupService.UpdateDupObject(dupObjectDto);
+        if (updatedDupObject.Total == 0 && updatedDupObject.Data.Length == 0)
             return Ok(new ApiResponse<DupObjectDto>()
             {
-                Total = 0,
+                Total = updatedDupObject.Total,
                 StatusCode = BadRequest().StatusCode,
-                Messages = new List<string>() { "Error during DUP object update." },
-                Data = null
+                Messages = new [] { "Error during DUP object update." },
+                Data = updatedDupObject.Data
             });
 
-        var dupObjList = new List<DupObjectDto>() { updatedDupObject };
         return Ok(new ApiResponse<DupObjectDto>()
         {
-            Total = dupObjList.Count,
+            Total = updatedDupObject.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = dupObjList
+            Messages = Array.Empty<string>(),
+            Data = updatedDupObject.Data
         });
     }
 
@@ -165,33 +162,33 @@ public class DupObjectsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data use process objects endpoint" })]
     public async Task<IActionResult> DeleteDupObject(int dupId, int id)
     {
-        var dup = await _dupRepository.GetDup(dupId);
-        if (dup == null)
-            return Ok(new ApiResponse<DupObjectDto>()
+        var dup = await _dupService.GetDup(dupId);
+        if (dup.Total == 0 && dup.Data.Length == 0)
+            return Ok(new ApiResponse<DupDto>()
             {
-                Total = 0,
+                Total = dup.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DUP has been found." },
-                Data = null
+                Messages = new [] { "No DUP has been found." },
+                Data = dup.Data
             });
 
-        var dupObj = await _dupRepository.GetDupObject(id);
-        if (dupObj == null)
+        var dupObj = await _dupService.GetDupObject(id);
+        if (dupObj.Total == 0 && dupObj.Data.Length == 0)
             return Ok(new ApiResponse<DupObjectDto>()
             {
-                Total = 0,
+                Total = dupObj.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DUP object has been found." },
-                Data = null
+                Messages = new [] { "No DUP object has been found." },
+                Data = dupObj.Data
             });
 
-        var count = await _dupRepository.DeleteDupObject(id);
+        var count = await _dupService.DeleteDupObject(id);
         return Ok(new ApiResponse<DupObjectDto>()
         {
             Total = count,
             StatusCode = Ok().StatusCode,
-            Messages = new List<string>() { "DUP object has been removed." },
-            Data = null
+            Messages = new [] { "DUP object has been removed." },
+            Data = Array.Empty<DupObjectDto>()
         });
     }
 
@@ -199,23 +196,23 @@ public class DupObjectsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data use process objects endpoint" })]
     public async Task<IActionResult> DeleteAllDupObjects(int dupId)
     {
-        var dup = await _dupRepository.GetDup(dupId);
-        if (dup == null)
-            return Ok(new ApiResponse<DupObjectDto>()
+        var dup = await _dupService.GetDup(dupId);
+        if (dup.Total == 0 && dup.Data.Length == 0)
+            return Ok(new ApiResponse<DupDto>()
             {
-                Total = 0,
+                Total = dup.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DUP has been found." },
-                Data = null
+                Messages = new [] { "No DUP has been found." },
+                Data = dup.Data
             });
 
-        var count = await _dupRepository.DeleteAllDupObjects(dupId);
+        var count = await _dupService.DeleteAllDupObjects(dupId);
         return Ok(new ApiResponse<DupObjectDto>()
         {
             Total = count,
             StatusCode = Ok().StatusCode,
-            Messages = new List<string>() { "All DUP objects have been removed." },
-            Data = null
+            Messages = new [] { "All DUP objects have been removed." },
+            Data = Array.Empty<DupObjectDto>()
         });
     }
 }

@@ -1,9 +1,10 @@
+using CEBS.Configs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CEBS.Controllers.MDR.v1;
 
-[ApiController]
-public class BaseMdrApiController : ControllerBase
+[Route($"{ApiConfigs.MdrApiConfigs.ApiUrl}/{ApiConfigs.MdrApiConfigs.ApiVersion}")]
+public class BaseMdrApiController : BaseApiController
 {
         
 }

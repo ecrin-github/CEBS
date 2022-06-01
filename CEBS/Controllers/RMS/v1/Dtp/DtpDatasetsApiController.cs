@@ -1,5 +1,6 @@
 using CEBS.Contracts.Responses;
 using CEBS.Contracts.Responses.RMS.DTO.v1;
+using CEBS.Interfaces.RMS.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -7,11 +8,11 @@ namespace CEBS.Controllers.RMS.v1.Dtp;
 
 public class DtpDatasetsApiController : BaseRmsApiController
 {
-    private readonly IDtpRepository _dtpRepository;
+    private readonly IDtpService _dtpService;
 
-    public DtpDatasetsApiController(IDtpRepository dtpRepository)
+    public DtpDatasetsApiController(IDtpService dtpService)
     {
-        _dtpRepository = dtpRepository ?? throw new ArgumentNullException(nameof(dtpRepository));
+        _dtpService = dtpService ?? throw new ArgumentNullException(nameof(dtpService));
     }
 
 
@@ -19,21 +20,21 @@ public class DtpDatasetsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process datasets endpoint" })]
     public async Task<IActionResult> GetDtpDatasetList()
     {
-        var dataset = await _dtpRepository.GetAllDtpDatasets();
-        if (dataset == null)
+        var dataset = await _dtpService.GetAllDtpDatasets();
+        if (dataset.Total == 0 && dataset.Data.Length == 0)
             return Ok(new ApiResponse<DtpDatasetDto>()
             {
-                Total = 0,
+                Total = dataset.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP datasets have been found." },
-                Data = null
+                Messages = new [] { "No DTP datasets have been found." },
+                Data = dataset.Data
             });
         return Ok(new ApiResponse<DtpDatasetDto>()
         {
-            Total = dataset.Count,
+            Total = dataset.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = dataset
+            Messages = Array.Empty<string>(),
+            Data = dataset.Data
         });
     }
 
@@ -41,22 +42,21 @@ public class DtpDatasetsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process datasets endpoint" })]
     public async Task<IActionResult> GetDtpDataset(int id)
     {
-        var dtpDataset = await _dtpRepository.GetDtpDataset(id);
-        if (dtpDataset == null)
+        var dtpDataset = await _dtpService.GetDtpDataset(id);
+        if (dtpDataset.Total == 0 && dtpDataset.Data.Length == 0)
             return Ok(new ApiResponse<DtpDatasetDto>()
             {
-                Total = 0,
+                Total = dtpDataset.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP datasets have been found." },
-                Data = null
+                Messages = new [] { "No DTP datasets have been found." },
+                Data = dtpDataset.Data
             });
-        var datasetList = new List<DtpDatasetDto>() { dtpDataset };
         return Ok(new ApiResponse<DtpDatasetDto>()
         {
-            Total = datasetList.Count,
+            Total = dtpDataset.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = datasetList
+            Messages = Array.Empty<string>(),
+            Data = dtpDataset.Data
         });
     }
 
@@ -64,22 +64,21 @@ public class DtpDatasetsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process datasets endpoint" })]
     public async Task<IActionResult> CreateDta(string objectId, [FromBody] DtpDatasetDto dtpDatasetDto)
     {
-        var dataset = await _dtpRepository.CreateDtpDataset(objectId, dtpDatasetDto);
-        if (dataset == null)
+        var dataset = await _dtpService.CreateDtpDataset(objectId, dtpDatasetDto);
+        if (dataset.Total == 0 && dataset.Data.Length == 0)
             return Ok(new ApiResponse<DtpDatasetDto>()
             {
-                Total = 0,
+                Total = dataset.Total,
                 StatusCode = BadRequest().StatusCode,
-                Messages = new List<string>() { "Error during DTP dataset creation." },
-                Data = null
+                Messages = new [] { "Error during DTP dataset creation." },
+                Data = dataset.Data
             });
-        var datasetList = new List<DtpDatasetDto>() { dataset };
         return Ok(new ApiResponse<DtpDatasetDto>()
         {
-            Total = datasetList.Count,
+            Total = dataset.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = datasetList
+            Messages = Array.Empty<string>(),
+            Data = dataset.Data
         });
     }
 
@@ -87,32 +86,31 @@ public class DtpDatasetsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process datasets endpoint" })]
     public async Task<IActionResult> UpdateDtpDataset(int id, [FromBody] DtpDatasetDto dtpDatasetDto)
     {
-        var dtpDataset = await _dtpRepository.GetDtpDataset(id);
-        if (dtpDataset == null)
+        var dtpDataset = await _dtpService.GetDtpDataset(id);
+        if (dtpDataset.Total == 0 && dtpDataset.Data.Length == 0)
             return Ok(new ApiResponse<DtpDatasetDto>()
             {
-                Total = 0,
+                Total = dtpDataset.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP datasets have been found." },
-                Data = null
+                Messages = new [] { "No DTP datasets have been found." },
+                Data = dtpDataset.Data
             });
 
-        var updatedDataset = await _dtpRepository.UpdateDtpDataset(dtpDatasetDto);
-        if (updatedDataset == null)
+        var updatedDataset = await _dtpService.UpdateDtpDataset(dtpDatasetDto);
+        if (updatedDataset.Total == 0 && updatedDataset.Data.Length == 0)
             return Ok(new ApiResponse<DtpDatasetDto>()
             {
-                Total = 0,
+                Total = updatedDataset.Total,
                 StatusCode = BadRequest().StatusCode,
-                Messages = new List<string>() { "Error during DTP dataset update." },
-                Data = null
+                Messages = new [] { "Error during DTP dataset update." },
+                Data = updatedDataset.Data
             });
-        var datasetList = new List<DtpDatasetDto>() { updatedDataset };
         return Ok(new ApiResponse<DtpDatasetDto>()
         {
-            Total = datasetList.Count,
+            Total = updatedDataset.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = datasetList
+            Messages = Array.Empty<string>(),
+            Data = updatedDataset.Data
         });
     }
 
@@ -120,23 +118,23 @@ public class DtpDatasetsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process datasets endpoint" })]
     public async Task<IActionResult> DeleteDtpDataset(int id)
     {
-        var dtpDataset = await _dtpRepository.GetDtpDataset(id);
-        if (dtpDataset == null)
+        var dtpDataset = await _dtpService.GetDtpDataset(id);
+        if (dtpDataset.Total == 0 && dtpDataset.Data.Length == 0)
             return Ok(new ApiResponse<DtpDatasetDto>()
             {
-                Total = 0,
+                Total = dtpDataset.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP datasets have been found." },
-                Data = null
+                Messages = new [] { "No DTP datasets have been found." },
+                Data = dtpDataset.Data
             });
 
-        var count = await _dtpRepository.DeleteDtpDataset(id);
+        var count = await _dtpService.DeleteDtpDataset(id);
         return Ok(new ApiResponse<DtpDatasetDto>()
         {
             Total = count,
             StatusCode = Ok().StatusCode,
-            Messages = new List<string>() { "DTP dataset has been removed." },
-            Data = null
+            Messages = new [] { "DTP dataset has been removed." },
+            Data = Array.Empty<DtpDatasetDto>()
         });
     }
 }

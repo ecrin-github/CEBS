@@ -1,18 +1,18 @@
 using CEBS.Contracts.Responses;
 using CEBS.Contracts.Responses.RMS.DTO.v1;
+using CEBS.Interfaces.RMS.Services;
 using Microsoft.AspNetCore.Mvc;
-using RmsService.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace CEBS.Controllers.RMS.v1.Dtp;
 
 public class DtpObjectsApiController : BaseRmsApiController
 {
-    private readonly IDtpRepository _dtpRepository;
+    private readonly IDtpService _dtpService;
 
-    public DtpObjectsApiController(IDtpRepository dtpRepository)
+    public DtpObjectsApiController(IDtpService dtpService)
     {
-        _dtpRepository = dtpRepository ?? throw new ArgumentNullException(nameof(dtpRepository));
+        _dtpService = dtpService ?? throw new ArgumentNullException(nameof(dtpService));
     }
 
 
@@ -20,32 +20,32 @@ public class DtpObjectsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process objects endpoint" })]
     public async Task<IActionResult> GetDtpObjectList(int dtpId)
     {
-        var dtp = await _dtpRepository.GetDtp(dtpId);
-        if (dtp == null)
-            return Ok(new ApiResponse<DtpObjectDto>()
+        var dtp = await _dtpService.GetDtp(dtpId);
+        if (dtp.Total == 0 && dtp.Data.Length == 0)
+            return Ok(new ApiResponse<DtpDto>()
             {
-                Total = 0,
+                Total = dtp.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP has been found." },
-                Data = null
+                Messages = new [] { "No DTP has been found." },
+                Data = dtp.Data
             });
 
-        var dtpObjects = await _dtpRepository.GetAllDtpObjects(dtpId);
-        if (dtpObjects == null)
+        var dtpObjects = await _dtpService.GetAllDtpObjects(dtpId);
+        if (dtpObjects.Total == 0 && dtpObjects.Data.Length == 0)
             return Ok(new ApiResponse<DtpObjectDto>()
             {
-                Total = 0,
+                Total = dtpObjects.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP objects have been found." },
-                Data = null
+                Messages = new [] { "No DTP objects have been found." },
+                Data = dtpObjects.Data
             });
 
         return Ok(new ApiResponse<DtpObjectDto>()
         {
-            Total = dtpObjects.Count,
+            Total = dtpObjects.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = dtpObjects
+            Messages = Array.Empty<string>(),
+            Data = dtpObjects.Data
         });
     }
 
@@ -53,33 +53,32 @@ public class DtpObjectsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process objects endpoint" })]
     public async Task<IActionResult> GetDtpObject(int dtpId, int id)
     {
-        var dtp = await _dtpRepository.GetDtp(dtpId);
-        if (dtp == null)
-            return Ok(new ApiResponse<DtpObjectDto>()
+        var dtp = await _dtpService.GetDtp(dtpId);
+        if (dtp.Total == 0 && dtp.Data.Length == 0)
+            return Ok(new ApiResponse<DtpDto>()
             {
-                Total = 0,
+                Total = dtp.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP has been found." },
-                Data = null
+                Messages = new [] { "No DTP has been found." },
+                Data = dtp.Data
             });
 
-        var dtpObj = await _dtpRepository.GetDtpObject(id);
-        if (dtpObj == null)
+        var dtpObj = await _dtpService.GetDtpObject(id);
+        if (dtpObj.Total == 0 && dtpObj.Data.Length == 0)
             return Ok(new ApiResponse<DtpObjectDto>()
             {
-                Total = 0,
+                Total = dtpObj.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP object has been found." },
-                Data = null
+                Messages = new [] { "No DTP object has been found." },
+                Data = dtpObj.Data
             });
 
-        var dtpObjectList = new List<DtpObjectDto>() { dtpObj };
         return Ok(new ApiResponse<DtpObjectDto>()
         {
-            Total = dtpObjectList.Count,
+            Total = dtpObj.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = dtpObjectList
+            Messages = Array.Empty<string>(),
+            Data = dtpObj.Data
         });
     }
 
@@ -87,33 +86,32 @@ public class DtpObjectsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process objects endpoint" })]
     public async Task<IActionResult> CreateDtpObject(int dtpId, [FromBody] DtpObjectDto dtpObjectDto)
     {
-        var dtp = await _dtpRepository.GetDtp(dtpId);
-        if (dtp == null)
-            return Ok(new ApiResponse<DtpObjectDto>()
+        var dtp = await _dtpService.GetDtp(dtpId);
+        if (dtp.Total == 0 && dtp.Data.Length == 0)
+            return Ok(new ApiResponse<DtpDto>()
             {
-                Total = 0,
+                Total = dtp.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP has been found." },
-                Data = null
+                Messages = new [] { "No DTP has been found." },
+                Data = dtp.Data
             });
 
-        var dtpObj = await _dtpRepository.CreateDtpObject(dtpId, dtpObjectDto.ObjectId, dtpObjectDto);
-        if (dtpObj == null)
+        var dtpObj = await _dtpService.CreateDtpObject(dtpId, dtpObjectDto.ObjectId, dtpObjectDto);
+        if (dtpObj.Total == 0 && dtpObj.Data.Length == 0)
             return Ok(new ApiResponse<DtpObjectDto>()
             {
-                Total = 0,
+                Total = dtpObj.Total,
                 StatusCode = BadRequest().StatusCode,
-                Messages = new List<string>() { "Error during DTP object creation." },
-                Data = null
+                Messages = new [] { "Error during DTP object creation." },
+                Data = dtpObj.Data
             });
 
-        var dtpObjList = new List<DtpObjectDto>() { dtpObj };
         return Ok(new ApiResponse<DtpObjectDto>()
         {
-            Total = dtpObjList.Count,
+            Total = dtpObj.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = dtpObjList
+            Messages = Array.Empty<string>(),
+            Data = dtpObj.Data
         });
     }
 
@@ -121,43 +119,42 @@ public class DtpObjectsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process objects endpoint" })]
     public async Task<IActionResult> UpdateDtpObject(int dtpId, int id, [FromBody] DtpObjectDto dtpObjectDto)
     {
-        var dtp = await _dtpRepository.GetDtp(dtpId);
-        if (dtp == null)
-            return Ok(new ApiResponse<DtpObjectDto>()
+        var dtp = await _dtpService.GetDtp(dtpId);
+        if (dtp.Total == 0 && dtp.Data.Length == 0)
+            return Ok(new ApiResponse<DtpDto>()
             {
-                Total = 0,
+                Total = dtp.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP has been found." },
-                Data = null
+                Messages = new [] { "No DTP has been found." },
+                Data = dtp.Data
             });
 
-        var dtpObj = await _dtpRepository.GetDtpObject(id);
-        if (dtpObj == null)
+        var dtpObj = await _dtpService.GetDtpObject(id);
+        if (dtpObj.Total == 0 && dtpObj.Data.Length == 0)
             return Ok(new ApiResponse<DtpObjectDto>()
             {
-                Total = 0,
+                Total = dtpObj.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP object has been found." },
-                Data = null
+                Messages = new [] { "No DTP object has been found." },
+                Data = dtpObj.Data
             });
 
-        var updatedDtpObj = await _dtpRepository.UpdateDtpObject(dtpObjectDto);
-        if (updatedDtpObj == null)
+        var updatedDtpObj = await _dtpService.UpdateDtpObject(dtpObjectDto);
+        if (updatedDtpObj.Total == 0 && updatedDtpObj.Data.Length == 0)
             return Ok(new ApiResponse<DtpObjectDto>()
             {
-                Total = 0,
+                Total = updatedDtpObj.Total,
                 StatusCode = BadRequest().StatusCode,
-                Messages = new List<string>() { "Error during DTP object update." },
-                Data = null
+                Messages = new [] { "Error during DTP object update." },
+                Data = updatedDtpObj.Data
             });
 
-        var dtpObjectList = new List<DtpObjectDto>() { updatedDtpObj };
         return Ok(new ApiResponse<DtpObjectDto>()
         {
-            Total = dtpObjectList.Count,
+            Total = updatedDtpObj.Total,
             StatusCode = Ok().StatusCode,
-            Messages = null,
-            Data = dtpObjectList
+            Messages = Array.Empty<string>(),
+            Data = updatedDtpObj.Data
         });
     }
 
@@ -165,33 +162,33 @@ public class DtpObjectsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process objects endpoint" })]
     public async Task<IActionResult> DeleteDtpObject(int dtpId, int id)
     {
-        var dtp = await _dtpRepository.GetDtp(dtpId);
-        if (dtp == null)
-            return Ok(new ApiResponse<DtpObjectDto>()
+        var dtp = await _dtpService.GetDtp(dtpId);
+        if (dtp.Total == 0 && dtp.Data.Length == 0)
+            return Ok(new ApiResponse<DtpDto>()
             {
-                Total = 0,
+                Total = dtp.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP has been found." },
-                Data = null
+                Messages = new [] { "No DTP has been found." },
+                Data = dtp.Data
             });
 
-        var dtpObj = await _dtpRepository.GetDtpObject(id);
-        if (dtpObj == null)
+        var dtpObj = await _dtpService.GetDtpObject(id);
+        if (dtpObj.Total == 0 && dtpObj.Data.Length == 0)
             return Ok(new ApiResponse<DtpObjectDto>()
             {
-                Total = 0,
+                Total = dtpObj.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP object has been found." },
-                Data = null
+                Messages = new [] { "No DTP object has been found." },
+                Data = dtpObj.Data
             });
 
-        var count = await _dtpRepository.DeleteDtpObject(id);
+        var count = await _dtpService.DeleteDtpObject(id);
         return Ok(new ApiResponse<DtpObjectDto>()
         {
             Total = count,
             StatusCode = Ok().StatusCode,
-            Messages = new List<string>() { "DTP object has been removed." },
-            Data = null
+            Messages = new [] { "DTP object has been removed." },
+            Data = Array.Empty<DtpObjectDto>()
         });
     }
 
@@ -199,23 +196,23 @@ public class DtpObjectsApiController : BaseRmsApiController
     [SwaggerOperation(Tags = new[] { "Data transfer process objects endpoint" })]
     public async Task<IActionResult> DeleteAllDtpObjects(int dtpId)
     {
-        var dtp = await _dtpRepository.GetDtp(dtpId);
-        if (dtp == null)
-            return Ok(new ApiResponse<DtpObjectDto>()
+        var dtp = await _dtpService.GetDtp(dtpId);
+        if (dtp.Total == 0 && dtp.Data.Length == 0)
+            return Ok(new ApiResponse<DtpDto>()
             {
-                Total = 0,
+                Total = dtp.Total,
                 StatusCode = NotFound().StatusCode,
-                Messages = new List<string>() { "No DTP has been found." },
-                Data = null
+                Messages = new [] { "No DTP has been found." },
+                Data = dtp.Data
             });
 
-        var count = await _dtpRepository.DeleteAllDtpObjects(dtpId);
+        var count = await _dtpService.DeleteAllDtpObjects(dtpId);
         return Ok(new ApiResponse<DtpObjectDto>()
         {
             Total = count,
             StatusCode = Ok().StatusCode,
-            Messages = new List<string>() { "All DTP objects have been removed." },
-            Data = null
+            Messages = new [] { "All DTP objects have been removed." },
+            Data = Array.Empty<DtpObjectDto>()
         });
     }
 }
