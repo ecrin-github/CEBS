@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="11.0.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+        <PackageReference Include="EFCore.NamingConventions" Version="6.0.0" />
+        <PackageReference Include="IdentityModel" Version="6.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.5">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="NEST" Version="7.17.2" />
+        <PackageReference Include="Npgsql" Version="6.0.4" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
+        <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.3.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Contracts\Requests\Context\v1" />
+      <Folder Include="Contracts\Requests\MDM\v1" />
+      <Folder Include="Contracts\Requests\MDR\v1" />
+      <Folder Include="Contracts\Requests\RMS\v1" />
+      <Folder Include="Contracts\Requests\User\v1" />
+      <Folder Include="Contracts\Responses\MDM\DTO\v1" />
+      <Folder Include="Contracts\Responses\MDR\DTO" />
+      <Folder Include="Contracts\Responses\User\DTO\v1" />
+      <Folder Include="Interfaces\MDR\Repositories" />
+      <Folder Include="Interfaces\User\Repositories" />
+      <Folder Include="Interfaces\User\Services" />
+      <Folder Include="Migrations" />
+      <Folder Include="Models\Context" />
+      <Folder Include="Models\MDM" />
+      <Folder Include="Models\MDR" />
+      <Folder Include="Repositories\MDR" />
+      <Folder Include="Repositories\User" />
+      <Folder Include="Services\User" />
+    </ItemGroup>
+
+</Project>

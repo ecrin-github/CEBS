@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{DC8B2CB3-67A1-493B-BD53-15D36C8224A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CEBS", "CEBS\CEBS.csproj", "{FF56592A-4F07-4BC9-A115-75B05ACCFD5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC8B2CB3-67A1-493B-BD53-15D36C8224A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC8B2CB3-67A1-493B-BD53-15D36C8224A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC8B2CB3-67A1-493B-BD53-15D36C8224A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC8B2CB3-67A1-493B-BD53-15D36C8224A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF56592A-4F07-4BC9-A115-75B05ACCFD5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF56592A-4F07-4BC9-A115-75B05ACCFD5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF56592A-4F07-4BC9-A115-75B05ACCFD5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF56592A-4F07-4BC9-A115-75B05ACCFD5C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
