@@ -941,6 +941,48 @@ public class LupApiController : BaseContextApiController
         });
     }
     
+    [HttpGet("role-classes")]
+    [SwaggerOperation(Tags = new[] { "Context - Role types" })]
+    public async Task<IActionResult> GetRoleClasses()
+    {
+        var data = await _lupService.GetRoleClasses();
+        if (data.Total == 0 && data.Data.Length == 0) return Ok(new ApiResponse<ContextDto>()
+        {
+            Total = data.Total,
+            Data = data.Data,
+            StatusCode = NotFound().StatusCode,
+            Messages = new []{"There are no records."}
+        });
+        return Ok(new ApiResponse<ContextDto>
+        {
+            Total = data.Total,
+            Data = data.Data,
+            StatusCode = Ok().StatusCode,
+            Messages = Array.Empty<string>()
+        });
+    }
+    
+    [HttpGet("role-classes/{id:int}")]
+    [SwaggerOperation(Tags = new[] { "Context - Role types" })]
+    public async Task<IActionResult> GetRoleClass(int id)
+    {
+        var data = await _lupService.GetRoleClass(id);
+        if (data.Total == 0 && data.Data.Length == 0) return Ok(new ApiResponse<ContextDto>()
+        {
+            Total = data.Total,
+            Data = data.Data,
+            Messages = new []{"Not found."},
+            StatusCode = NotFound().StatusCode
+        });
+        return Ok(new ApiResponse<ContextDto>()
+        {
+            Total = data.Total,
+            Data = data.Data,
+            StatusCode = Ok().StatusCode,
+            Messages = Array.Empty<string>()
+        });
+    }
+    
     [HttpGet("size-units")]
     [SwaggerOperation(Tags = new[] { "Context - Size units" })]
     public async Task<IActionResult> GetSizeUnits()
