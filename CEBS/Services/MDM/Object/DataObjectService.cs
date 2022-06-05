@@ -7,7 +7,7 @@ namespace CEBS.Services.MDM.Object;
 
 public class DataObjectService : IDataObjectService
 {
-    public async Task<BaseResponse<DataObjectDto>> GetAllDataObjects()
+    public async Task<BaseResponse<DataObjectDto>> GetDataObjects()
     {
         throw new NotImplementedException();
     }

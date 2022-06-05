@@ -8,7 +8,6 @@ public interface IDupService
 {
     Task<BaseResponse<DupDto>> GetAllDup();
     Task<BaseResponse<DupDto>> GetDup(int id);
-    Task<BaseResponse<DupDto>> GetRecentDup(int limit);
     Task<BaseResponse<DupDto>> CreateDup(DupDto dupDto);
     Task<BaseResponse<DupDto>> UpdateDup(DupDto dupDto);
     Task<int> DeleteDup(int id);

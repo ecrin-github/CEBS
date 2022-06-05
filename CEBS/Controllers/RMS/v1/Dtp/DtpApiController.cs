@@ -38,28 +38,6 @@ public class DtpApiController : BaseRmsApiController
         });
     }
 
-    [HttpGet("data-transfers/processes/recent/{number:int}")]
-    [SwaggerOperation(Tags = new[] { "Data transfer process endpoint" })]
-    public async Task<IActionResult> GetRecentDtp(int number)
-    {
-        var recentData = await _dtpService.GetRecentDtp(number);
-        if (recentData.Total == 0 && recentData.Data.Length == 0)
-            return Ok(new ApiResponse<DtpDto>()
-            {
-                Total = recentData.Total,
-                StatusCode = NotFound().StatusCode,
-                Messages = new [] { "No DTPs have been found." },
-                Data = recentData.Data
-            });
-        return Ok(new ApiResponse<DtpDto>()
-        {
-            Total = recentData.Total,
-            StatusCode = Ok().StatusCode,
-            Messages = Array.Empty<string>(),
-            Data = recentData.Data
-        });
-    }
-
     [HttpGet("data-transfers/processes/{dtpId:int}")]
     [SwaggerOperation(Tags = new[] { "Data transfer process endpoint" })]
     public async Task<IActionResult> GetDtp(int dtpId)

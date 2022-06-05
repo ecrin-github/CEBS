@@ -8,7 +8,6 @@ public interface IDtpService
 {
     Task<BaseResponse<DtpDto>> GetAllDtp();
     Task<BaseResponse<DtpDto>> GetDtp(int id);
-    Task<BaseResponse<DtpDto>> GetRecentDtp(int limit);
     Task<BaseResponse<DtpDto>> CreateDtp(DtpDto dtpDto);
     Task<BaseResponse<DtpDto>> UpdateDtp(DtpDto dtpDto);
     Task<int> DeleteDtp(int id);

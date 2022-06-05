@@ -38,28 +38,6 @@ public class DupApiController : BaseRmsApiController
         });
     }
 
-    [HttpGet("data-uses/processes/recent/{number:int}")]
-    [SwaggerOperation(Tags = new[] { "Data use process endpoint" })]
-    public async Task<IActionResult> GetRecentDup(int number)
-    {
-        var recentData = await _dupService.GetRecentDup(number);
-        if (recentData.Total == 0 && recentData.Data.Length == 0)
-            return Ok(new ApiResponse<DupDto>()
-            {
-                Total = recentData.Total,
-                StatusCode = NotFound().StatusCode,
-                Messages = new [] { "No DUP has been found." },
-                Data = recentData.Data
-            });
-        return Ok(new ApiResponse<DupDto>()
-        {
-            Total = recentData.Total,
-            StatusCode = Ok().StatusCode,
-            Messages = Array.Empty<string>(),
-            Data = recentData.Data
-        });
-    }
-
     [HttpGet("data-uses/processes/{dupId:int}")]
     [SwaggerOperation(Tags = new[] { "Data use process endpoint" })]
     public async Task<IActionResult> GetDup(int dupId)

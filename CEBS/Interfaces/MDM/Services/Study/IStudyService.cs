@@ -7,7 +7,7 @@ namespace CEBS.Interfaces.MDM.Services.Study;
 public interface IStudyService
 {
     // Study
-    Task<BaseResponse<StudyDto>> GetAllStudies();
+    Task<BaseResponse<StudyDto>> GetStudies();
     Task<BaseResponse<StudyDto>> GetStudyBySdSid(string sdSid);
     Task<BaseResponse<StudyDto>> GetStudyById(int id);
     Task<BaseResponse<StudyDto>> CreateStudy(StudyDto studyDto);

@@ -16,12 +16,7 @@ public class DtpService : IDtpService
     {
         throw new NotImplementedException();
     }
-
-    public async Task<BaseResponse<DtpDto>> GetRecentDtp(int limit)
-    {
-        throw new NotImplementedException();
-    }
-
+    
     public async Task<BaseResponse<DtpDto>> CreateDtp(DtpDto dtpDto)
     {
         throw new NotImplementedException();

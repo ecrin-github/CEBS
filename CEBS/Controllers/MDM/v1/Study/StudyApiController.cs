@@ -19,7 +19,7 @@ public class StudyApiController : BaseMdmApiController
     [SwaggerOperation(Tags = new []{"Study endpoint"})]
     public async Task<IActionResult> GetAllStudies()
     {
-        var studies = await _studyService.GetAllStudies();
+        var studies = await _studyService.GetStudies();
         if (studies.Total == 0 && studies.Data.Length == 0)
             return Ok(new ApiResponse<StudyDto>()
             {
@@ -39,9 +39,31 @@ public class StudyApiController : BaseMdmApiController
 
     [HttpGet("studies/{sdSid}")]
     [SwaggerOperation(Tags = new []{"Study endpoint"})]
-    public async Task<IActionResult> GetStudyById(string sdSid)
+    public async Task<IActionResult> GetStudyBySdSid(string sdSid)
     {
         var study = await _studyService.GetStudyBySdSid(sdSid);
+        if (study.Total == 0 && study.Data.Length == 0) return Ok(new ApiResponse<StudyDto>()
+        {
+            Total = study.Total,
+            StatusCode = NotFound().StatusCode,
+            Messages = new [] { "No studies have been found." },
+            Data = study.Data
+        });
+
+        return Ok(new ApiResponse<StudyDto>()
+        {
+            Total = study.Total,
+            StatusCode = Ok().StatusCode,
+            Messages = Array.Empty<string>(),
+            Data = study.Data
+        });
+    }
+    
+    [HttpGet("studies/{id:int}")]
+    [SwaggerOperation(Tags = new []{"Study endpoint"})]
+    public async Task<IActionResult> GetStudyById(int id)
+    {
+        var study = await _studyService.GetStudyById(id);
         if (study.Total == 0 && study.Data.Length == 0) return Ok(new ApiResponse<StudyDto>()
         {
             Total = study.Total,

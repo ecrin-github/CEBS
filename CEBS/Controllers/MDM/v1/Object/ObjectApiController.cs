@@ -19,7 +19,7 @@ public class ObjectApiController : BaseMdmApiController
     [SwaggerOperation(Tags = new []{"Data objects endpoint"})]
     public async Task<IActionResult> GetAllDataObjects()
     {
-        var dataObjects = await _dataObjectService.GetAllDataObjects();
+        var dataObjects = await _dataObjectService.GetDataObjects();
         if (dataObjects.Total == 0 && dataObjects.Data.Length == 0)
             return Ok(new ApiResponse<DataObjectDto>()
             {
@@ -40,9 +40,31 @@ public class ObjectApiController : BaseMdmApiController
     
     [HttpGet("data-objects/{sdOid}")]
     [SwaggerOperation(Tags = new []{"Data objects endpoint"})]
-    public async Task<IActionResult> GetObjectById(string sdOid)
+    public async Task<IActionResult> GetObjectBySdOid(string sdOid)
     {
         var dataObject = await _dataObjectService.GetObjectBySdOid(sdOid);
+        if (dataObject.Total == 0 && dataObject.Data.Length == 0) return Ok(new ApiResponse<DataObjectDto>()
+        {
+            Total = dataObject.Total,
+            StatusCode = NotFound().StatusCode,
+            Messages = new [] { "No data object has been found." },
+            Data = dataObject.Data
+        });
+
+        return Ok(new ApiResponse<DataObjectDto>()
+        {
+            Total = dataObject.Total,
+            StatusCode = Ok().StatusCode,
+            Messages = Array.Empty<string>(),
+            Data = dataObject.Data
+        });
+    }
+    
+    [HttpGet("data-objects/{id:int}")]
+    [SwaggerOperation(Tags = new []{"Data objects endpoint"})]
+    public async Task<IActionResult> GetObjectById(int id)
+    {
+        var dataObject = await _dataObjectService.GetObjectById(id);
         if (dataObject.Total == 0 && dataObject.Data.Length == 0) return Ok(new ApiResponse<DataObjectDto>()
         {
             Total = dataObject.Total,

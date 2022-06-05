@@ -7,7 +7,7 @@ namespace CEBS.Interfaces.MDM.Services.Object;
 public interface IDataObjectService
 {
     // Data objects
-    Task<BaseResponse<DataObjectDto>> GetAllDataObjects();
+    Task<BaseResponse<DataObjectDto>> GetDataObjects();
     Task<BaseResponse<DataObjectDto>> GetObjectBySdOid(string sdOid);
     Task<BaseResponse<DataObjectDto>> GetObjectById(int id);
     Task<BaseResponse<DataObjectDto>> CreateDataObject(DataObjectDto dataObjectDto);

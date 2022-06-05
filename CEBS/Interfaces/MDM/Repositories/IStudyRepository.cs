@@ -7,8 +7,9 @@ namespace CEBS.Interfaces.MDM.Repositories;
 public interface IStudyRepository
 {
     // Study
-    Task<BaseResponse<Study>> GetAllStudies();
-    Task<BaseResponse<Study>> GetStudyById(string sdSid);
+    Task<BaseResponse<Study>> GetStudies();
+    Task<BaseResponse<Study>> GetStudyById(int id);
+    Task<BaseResponse<Study>> GetStudyBySdSid(string sdSid);
     Task<BaseResponse<Study>> CreateStudy(Study study);
     Task<BaseResponse<Study>> UpdateStudy(Study study);
     Task<int> DeleteStudy(string sdSid);

@@ -7,7 +7,7 @@ namespace CEBS.Services.MDM.Study;
 
 public class StudyService : IStudyService
 {
-    public async Task<BaseResponse<StudyDto>> GetAllStudies()
+    public async Task<BaseResponse<StudyDto>> GetStudies()
     {
         throw new NotImplementedException();
     }

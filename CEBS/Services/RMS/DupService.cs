@@ -17,11 +17,6 @@ public class DupService : IDupService
         throw new NotImplementedException();
     }
 
-    public async Task<BaseResponse<DupDto>> GetRecentDup(int limit)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<BaseResponse<DupDto>> CreateDup(DupDto dupDto)
     {
         throw new NotImplementedException();

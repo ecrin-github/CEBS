@@ -7,8 +7,9 @@ namespace CEBS.Interfaces.MDM.Repositories;
 public interface IObjectRepository
 {
     // Data objects
-    Task<BaseResponse<DataObject>> GetAllDataObjects();
-    Task<BaseResponse<DataObject>> GetObjectById(string sdOid);
+    Task<BaseResponse<DataObject>> GetDataObjects();
+    Task<BaseResponse<DataObject>> GetObjectById(int id);
+    Task<BaseResponse<DataObject>> GetObjectBySdOid(string sdOid);
     Task<BaseResponse<DataObject>> CreateDataObject(DataObject dataObject);
     Task<BaseResponse<DataObject>> UpdateDataObject(DataObject dataObject);
     Task<int> DeleteDataObject(string sdOid);
