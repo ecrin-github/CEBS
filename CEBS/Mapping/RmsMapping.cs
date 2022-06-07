@@ -258,6 +258,136 @@ public class RmsMapping : IRmsMapping
         return secondaryUseDto;
     }
 
+    public AccessPrereq[] ReverseAccessPrereqDtoBuilder(AccessPrereqDto[] accessPrereqDtos)
+    {
+        throw new NotImplementedException();
+    }
+
+    public AccessPrereq ReverseAccessPrereqDtoMapper(AccessPrereqDto accessPrereqDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Dta[] ReverseDtaDtoBuilder(DtaDto[] dtaDtos)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Dta ReverseDtaDtoMapper(DtaDto dtaDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Dtp[] ReverseDtpDtoBuilder(DtpDto[] dtpDtos)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Dtp ReverseDtpDtoMapper(DtpDto dtpDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DtpDataset[] ReverseDtpDatasetDtoBuilder(DtpDatasetDto[] dtpDatasetDtos)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DtpDataset ReverseDtpDatasetDtoMapper(DtpDatasetDto dtpDatasetDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DtpObject[] ReverseDtpObjectDtoBuilder(DtpObjectDto[] dtpObjectDtos)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DtpObject ReverseDtpObjectDtoMapper(DtpObjectDto dtpObjectDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DtpStudy[] ReverseDtpStudyDtoBuilder(DtpStudyDto[] dtpStudyDtos)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DtpStudy ReverseDtpStudyDtoMapper(DtpStudyDto dtpStudyDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Dua[] ReverseDuaDtoBuilder(DuaDto[] duaDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Dua ReverseDuaDtoMapper(DuaDto duaDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Dup[] ReverseDupDtoBuilder(DupDto[] dupDtos)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Dup ReverseDupDtoMapper(DupDto dupDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DupObject[] ReverseDupObjectDtoBuilder(DupObjectDto[] dupObjectDtos)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DupObject ReverseDupObjectDtoMapper(DupObjectDto dupObjectDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DupPrereq[] ReverseDupPrereqDtoBuilder(DupPrereqDto[] dupPrereqDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DupPrereq ReverseDupPrereqDtoMapper(DupPrereqDto dupPrereqDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ProcessNote[] ReverseProcessNoteDtoBuilder(ProcessNoteDto[] processNoteDtos)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ProcessNote ReverseProcessNoteDtoMapper(ProcessNoteDto processNoteDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ProcessPeople[] ReverseProcessPeopleDtoBuilder(ProcessPeopleDto[] processPeopleDtos)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ProcessPeople ReverseProcessPeopleDtoMapper(ProcessPeopleDto processPeopleDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public SecondaryUse[] ReverseSecondaryUseDtoBuilder(SecondaryUseDto[] secondaryUseDtos)
+    {
+        throw new NotImplementedException();
+    }
+
+    public SecondaryUse ReverseSecondaryUseDtoMapper(SecondaryUseDto secondaryUseDto)
+    {
+        throw new NotImplementedException();
+    }
+
 
     public AccessPrereqDto[] AccessPrereqDtoBuilder(AccessPrereq[] accessPrereq)
     {

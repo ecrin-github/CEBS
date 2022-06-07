@@ -69,12 +69,12 @@ public class DtpRepository : IDtpRepository
     public async Task<int> DeleteDtp(int id)
     {
         var data = await GetDtp(id);
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _rmsDbContext.Dtps.RemoveRange(data.Data);
         await _rmsDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<BaseResponse<Dta>> GetAllDta(int dtpId)
@@ -132,20 +132,20 @@ public class DtpRepository : IDtpRepository
     {
         var data = await GetDta(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _rmsDbContext.Dtas.RemoveRange(data.Data);
         
         await _rmsDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllDta(int dtpId)
     {
         var data = await GetAllDta(dtpId);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _rmsDbContext.Dtas.RemoveRange(data.Data);
         
@@ -208,13 +208,13 @@ public class DtpRepository : IDtpRepository
     {
         var data = await GetDtpDataset(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _rmsDbContext.DtpDatasets.RemoveRange(data.Data);
         
         await _rmsDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<BaseResponse<DtpObject>> GetAllDtpObjects(int dtpId)
@@ -272,20 +272,20 @@ public class DtpRepository : IDtpRepository
     {
         var data = await GetDtpObject(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _rmsDbContext.DtpObjects.RemoveRange(data.Data);
         
         await _rmsDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllDtpObjects(int dtpId)
     {
         var data = await GetAllDtpObjects(dtpId);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _rmsDbContext.DtpObjects.RemoveRange(data.Data);
         
@@ -349,13 +349,13 @@ public class DtpRepository : IDtpRepository
     {
         var data = await GetDtpStudy(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _rmsDbContext.DtpStudies.RemoveRange(data.Data);
         
         await _rmsDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllDtpStudies(int dtpId)

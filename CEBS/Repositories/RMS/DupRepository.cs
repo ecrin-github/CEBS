@@ -132,13 +132,13 @@ public class DupRepository : IDupRepository
     {
         var data = await GetDupObject(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _rmsDbContext.DupObjects.RemoveRange(data.Data);
         
         await _rmsDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllDupObjects(int dupId)
@@ -209,20 +209,20 @@ public class DupRepository : IDupRepository
     {
         var data = await GetDupPrereq(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _rmsDbContext.DupPrereqs.RemoveRange(data.Data);
         
         await _rmsDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllDupPrereqs(int dupId)
     {
         var data = await GetDupPrereqs(dupId);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _rmsDbContext.DupPrereqs.RemoveRange(data.Data);
         
@@ -286,13 +286,13 @@ public class DupRepository : IDupRepository
     {
         var data = await GetSecondaryUse(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _rmsDbContext.SecondaryUses.RemoveRange(data.Data);
         
         await _rmsDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllSecondaryUses(int dupId)
@@ -363,20 +363,20 @@ public class DupRepository : IDupRepository
     {
         var data = await GetDua(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _rmsDbContext.Duas.RemoveRange(data.Data);
         
         await _rmsDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllDua(int dupId)
     {
         var data = await GetAllDua(dupId);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _rmsDbContext.Duas.RemoveRange(data.Data);
         

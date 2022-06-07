@@ -88,6 +88,16 @@ public class ObjectRepository : IObjectRepository
         return await GetObjectById(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<DataObject>> BulkCreateDataObject(DataObject[] dataObjects)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<DataObject>> BulkUpdateDataObject(DataObject[] dataObjects)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteDataObject(string sdOid)
     {
         var dataObject = await _mdmDbContext.DataObjects
@@ -154,29 +164,37 @@ public class ObjectRepository : IObjectRepository
         return await GetObjectContributor(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<ObjectContributor>> BulkCreateObjectContributor(ObjectContributor[] objectContributors)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<ObjectContributor>> BulkUpdateObjectContributor(ObjectContributor[] objectContributors)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteObjectContributor(int id)
     {
         var data = await GetObjectContributor(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectContributors.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllObjectContributors(string sdOid)
     {
         var data = await GetObjectContributors(sdOid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectContributors.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
 
     public async Task<BaseResponse<ObjectDataset>> GetObjectDatasets(string sdOid)
@@ -230,29 +248,37 @@ public class ObjectRepository : IObjectRepository
         return await GetObjectDataset(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<ObjectDataset>> BulkCreateObjectDataset(ObjectDataset[] objectDatasets)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<ObjectDataset>> BulkUpdateObjectDataset(ObjectDataset[] objectDatasets)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteObjectDataset(int id)
     {
         var data = await GetObjectDataset(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectDatasets.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllObjectDatasets(string sdOid)
     {
         var data = await GetObjectDatasets(sdOid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectDatasets.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
 
     public async Task<BaseResponse<ObjectDate>> GetObjectDates(string sdOid)
@@ -306,29 +332,37 @@ public class ObjectRepository : IObjectRepository
         return await GetObjectDate(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<ObjectDate>> BulkCreateObjectDate(ObjectDate[] objectDates)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<ObjectDate>> BulkUpdateObjectDate(ObjectDate[] objectDates)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteObjectDate(int id)
     {
         var data = await GetObjectDate(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectDates.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllObjectDates(string sdOid)
     {
         var data = await GetObjectDates(sdOid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectDates.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
 
     public async Task<BaseResponse<ObjectDescription>> GetObjectDescriptions(string sdOid)
@@ -382,29 +416,37 @@ public class ObjectRepository : IObjectRepository
         return await GetObjectDescription(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<ObjectDescription>> BulkCreateObjectDescription(ObjectDescription[] objectDescriptions)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<ObjectDescription>> BulkUpdateObjectDescription(ObjectDescription[] objectDescriptions)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteObjectDescription(int id)
     {
         var data = await GetObjectDescription(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectDescriptions.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllObjectDescriptions(string sdOid)
     {
         var data = await GetObjectDescriptions(sdOid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectDescriptions.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
 
     public async Task<BaseResponse<ObjectIdentifier>> GetObjectIdentifiers(string sdOid)
@@ -458,29 +500,37 @@ public class ObjectRepository : IObjectRepository
         return await GetObjectIdentifier(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<ObjectIdentifier>> BulkCreateObjectIdentifier(ObjectIdentifier[] objectIdentifiers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<ObjectIdentifier>> BulkUpdateObjectIdentifier(ObjectIdentifier[] objectIdentifiers)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteObjectIdentifier(int id)
     {
         var data = await GetObjectIdentifier(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectIdentifiers.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllObjectIdentifiers(string sdOid)
     {
         var data = await GetObjectIdentifiers(sdOid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectIdentifiers.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
 
     public async Task<BaseResponse<ObjectInstance>> GetObjectInstances(string sdOid)
@@ -534,29 +584,37 @@ public class ObjectRepository : IObjectRepository
         return await GetObjectInstance(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<ObjectInstance>> BulkCreateObjectInstance(ObjectInstance[] objectInstances)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<ObjectInstance>> BulkUpdateObjectInstance(ObjectInstance[] objectInstances)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteObjectInstance(int id)
     {
         var data = await GetObjectInstance(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectInstances.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllObjectInstances(string sdOid)
     {
         var data = await GetObjectInstances(sdOid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectInstances.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
 
     public async Task<BaseResponse<ObjectRelationship>> GetObjectRelationships(string sdOid)
@@ -610,29 +668,37 @@ public class ObjectRepository : IObjectRepository
         return await GetObjectRelationship(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<ObjectRelationship>> BulkCreateObjectRelationship(ObjectRelationship[] objectRelationships)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<ObjectRelationship>> BulkUpdateObjectRelationship(ObjectRelationship[] objectRelationships)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteObjectRelationship(int id)
     {
         var data = await GetObjectRelationship(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectRelationships.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllObjectRelationships(string sdOid)
     {
         var data = await GetObjectRelationships(sdOid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectRelationships.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
 
     public async Task<BaseResponse<ObjectRight>> GetObjectRights(string sdOid)
@@ -686,29 +752,37 @@ public class ObjectRepository : IObjectRepository
         return await GetObjectRight(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<ObjectRight>> BulkCreateObjectRight(ObjectRight[] objectRights)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<ObjectRight>> BulkUpdateObjectRight(ObjectRight[] objectRights)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteObjectRight(int id)
     {
         var data = await GetObjectRight(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectRights.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllObjectRights(string sdOid)
     {
         var data = await GetObjectRights(sdOid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectRights.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
 
     public async Task<BaseResponse<ObjectTitle>> GetObjectTitles(string sdOid)
@@ -762,29 +836,37 @@ public class ObjectRepository : IObjectRepository
         return await GetObjectTitle(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<ObjectTitle>> BulkCreateObjectTitle(ObjectTitle[] objectTitles)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<ObjectTitle>> BulkUpdateObjectTitle(ObjectTitle[] objectTitles)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteObjectTitle(int id)
     {
         var data = await GetObjectTitle(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectTitles.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllObjectTitles(string sdOid)
     {
         var data = await GetObjectTitles(sdOid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectTitles.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
 
     public async Task<BaseResponse<ObjectTopic>> GetObjectTopics(string sdOid)
@@ -838,29 +920,37 @@ public class ObjectRepository : IObjectRepository
         return await GetObjectTopic(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<ObjectTopic>> BulkCreateObjectTopic(ObjectTopic[] objectTopics)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<ObjectTopic>> BulkUpdateObjectTopic(ObjectTopic[] objectTopics)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteObjectTopic(int id)
     {
         var data = await GetObjectTopic(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectTopics.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllObjectTopics(string sdOid)
     {
         var data = await GetObjectTopics(sdOid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.ObjectTopics.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
     
     private static int CalculateSkip(int page, int size)
@@ -885,7 +975,7 @@ public class ObjectRepository : IObjectRepository
         var data = await query.Skip(skip).Take(paginationRequest.Size).ToArrayAsync();
 
         var total = await query.CountAsync();
-
+        
         return new BaseResponse<DataObject>
         {
             Total = total,

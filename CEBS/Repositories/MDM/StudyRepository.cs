@@ -80,6 +80,21 @@ public class StudyRepository : IStudyRepository
         return await GetStudyById(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<Study>> BulkCreateStudy(Study[] studies)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<Study>> UpdateStudy(Study[] studies)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<Study>> BulkUpdateStudy(Study[] study)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<BaseResponse<Study>> UpdateStudy(Study study)
     {
         var res = _mdmDbContext.Studies.Update(study);
@@ -153,29 +168,37 @@ public class StudyRepository : IStudyRepository
         return await GetStudyContributor(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<StudyContributor>> BulkCreateStudyContributor(StudyContributor[] studyContributors)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<StudyContributor>> BulkUpdateStudyContributor(StudyContributor[] studyContributors)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteStudyContributor(int id)
     {
         var data = await GetStudyContributor(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.StudyContributors.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllStudyContributors(string sdSid)
     {
         var data = await GetStudyContributors(sdSid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.StudyContributors.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
 
     public async Task<BaseResponse<StudyFeature>> GetStudyFeatures(string sdSid)
@@ -229,29 +252,37 @@ public class StudyRepository : IStudyRepository
         return await GetStudyFeature(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<StudyFeature>> BulkCreateStudyFeature(StudyFeature[] studyFeatures)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<StudyFeature>> BulkUpdateStudyFeature(StudyFeature[] studyFeatures)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteStudyFeature(int id)
     {
         var data = await GetStudyFeature(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.StudyFeatures.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllStudyFeatures(string sdSid)
     {
         var data = await GetStudyFeatures(sdSid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.StudyFeatures.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
 
     public async Task<BaseResponse<StudyIdentifier>> GetStudyIdentifiers(string sdSid)
@@ -305,29 +336,37 @@ public class StudyRepository : IStudyRepository
         return await GetStudyIdentifier(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<StudyIdentifier>> BulkCreateStudyIdentifier(StudyIdentifier[] studyIdentifiers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<StudyIdentifier>> BulkUpdateStudyIdentifier(StudyIdentifier[] studyIdentifiers)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteStudyIdentifier(int id)
     {
         var data = await GetStudyIdentifier(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.StudyIdentifiers.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllStudyIdentifiers(string sdSid)
     {
         var data = await GetStudyIdentifiers(sdSid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.StudyIdentifiers.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
 
     public async Task<BaseResponse<StudyReference>> GetStudyReferences(string sdSid)
@@ -381,29 +420,37 @@ public class StudyRepository : IStudyRepository
         return await GetStudyReference(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<StudyReference>> BulkCreateStudyReference(StudyReference[] studyReferences)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<StudyReference>> BulkUpdateStudyReference(StudyReference[] studyReferences)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteStudyReference(int id)
     {
         var data = await GetStudyReference(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.StudyReferences.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllStudyReferences(string sdSid)
     {
         var data = await GetStudyReferences(sdSid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.StudyReferences.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
 
     public async Task<BaseResponse<StudyRelationship>> GetStudyRelationships(string sdSid)
@@ -457,29 +504,37 @@ public class StudyRepository : IStudyRepository
         return await GetStudyRelationship(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<StudyRelationship>> BulkCreateStudyRelationship(StudyRelationship[] studyRelationships)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<StudyRelationship>> BulkUpdateStudyRelationship(StudyRelationship[] studyRelationships)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteStudyRelationship(int id)
     {
         var data = await GetStudyRelationship(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.StudyRelationships.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllStudyRelationships(string sdSid)
     {
         var data = await GetStudyRelationships(sdSid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.StudyRelationships.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
 
     public async Task<BaseResponse<StudyTitle>> GetStudyTitles(string sdSid)
@@ -533,29 +588,37 @@ public class StudyRepository : IStudyRepository
         return await GetStudyTitle(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<StudyTitle>> BulkCreateStudyTitle(StudyTitle[] studyTitles)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<StudyTitle>> BulkUpdateStudyTitle(StudyTitle[] studyTitles)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteStudyTitle(int id)
     {
         var data = await GetStudyTitle(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.StudyTitles.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllStudyTitles(string sdSid)
     {
         var data = await GetStudyTitles(sdSid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.StudyTitles.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
 
     public async Task<BaseResponse<StudyTopic>> GetStudyTopics(string sdSid)
@@ -609,29 +672,37 @@ public class StudyRepository : IStudyRepository
         return await GetStudyTopic(res.Entity.Id);
     }
 
+    public async Task<BaseResponse<StudyTopic>> BulkCreateStudyTopic(StudyTopic[] studyTopics)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BaseResponse<StudyTopic>> BulkUpdateStudyTopic(StudyTopic[] studyTopics)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> DeleteStudyTopic(int id)
     {
         var data = await GetStudyTopic(id);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.StudyTopics.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
         
-        return 1;
+        return data.Total;
     }
 
     public async Task<int> DeleteAllStudyTopics(string sdSid)
     {
         var data = await GetStudyTopics(sdSid);
         
-        if (data.Total == 0 && data.Data.Length == 0) return 0;
-            
-        var count = data.Total;
+        if (data.Total == 0 && data.Data.Length == 0) return data.Total;
         
         _mdmDbContext.StudyTopics.RemoveRange(data.Data);
         await _mdmDbContext.SaveChangesAsync();
-        return count;
+        return data.Total;
     }
     
     private static int CalculateSkip(int page, int size)

@@ -46,4 +46,47 @@ public interface IRmsMapping
 
     SecondaryUseDto[] SecondaryUseDtoBuilder(SecondaryUse[] secondaryUses);
     SecondaryUseDto SecondaryUseDtoMapper(SecondaryUse secondaryUse);
+    
+    
+    // Reverse mapping
+    AccessPrereq[] ReverseAccessPrereqDtoBuilder(AccessPrereqDto[] accessPrereqDtos);
+    AccessPrereq ReverseAccessPrereqDtoMapper(AccessPrereqDto accessPrereqDto);
+
+    Dta[] ReverseDtaDtoBuilder(DtaDto[] dtaDtos);
+    Dta ReverseDtaDtoMapper(DtaDto dtaDto);
+
+    Dtp[] ReverseDtpDtoBuilder(DtpDto[] dtpDtos);
+    Dtp ReverseDtpDtoMapper(DtpDto dtpDto);
+
+    DtpDataset[] ReverseDtpDatasetDtoBuilder(DtpDatasetDto[] dtpDatasetDtos);
+    DtpDataset ReverseDtpDatasetDtoMapper(DtpDatasetDto dtpDatasetDto);
+
+    DtpObject[] ReverseDtpObjectDtoBuilder(DtpObjectDto[] dtpObjectDtos);
+    DtpObject ReverseDtpObjectDtoMapper(DtpObjectDto dtpObjectDto);
+
+    DtpStudy[] ReverseDtpStudyDtoBuilder(DtpStudyDto[] dtpStudyDtos);
+    DtpStudy ReverseDtpStudyDtoMapper(DtpStudyDto dtpStudyDto);
+        
+        
+    // DUP mappers and builders
+    Dua[] ReverseDuaDtoBuilder(DuaDto[] duaDto);
+    Dua ReverseDuaDtoMapper(DuaDto duaDto);
+
+    Dup[] ReverseDupDtoBuilder(DupDto[] dupDtos);
+    Dup ReverseDupDtoMapper(DupDto dupDto);
+
+    DupObject[] ReverseDupObjectDtoBuilder(DupObjectDto[] dupObjectDtos);
+    DupObject ReverseDupObjectDtoMapper(DupObjectDto dupObjectDto);
+
+    DupPrereq[] ReverseDupPrereqDtoBuilder(DupPrereqDto[] dupPrereqDto);
+    DupPrereq ReverseDupPrereqDtoMapper(DupPrereqDto dupPrereqDto);
+
+    ProcessNote[] ReverseProcessNoteDtoBuilder(ProcessNoteDto[] processNoteDtos);
+    ProcessNote ReverseProcessNoteDtoMapper(ProcessNoteDto processNoteDto);
+
+    ProcessPeople[] ReverseProcessPeopleDtoBuilder(ProcessPeopleDto[] processPeopleDtos);
+    ProcessPeople ReverseProcessPeopleDtoMapper(ProcessPeopleDto processPeopleDto);
+
+    SecondaryUse[] ReverseSecondaryUseDtoBuilder(SecondaryUseDto[] secondaryUseDtos);
+    SecondaryUse ReverseSecondaryUseDtoMapper(SecondaryUseDto secondaryUseDto);
 }
